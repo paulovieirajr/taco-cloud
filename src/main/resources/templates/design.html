@@ -4,21 +4,22 @@
 <head>
     <title>Taco Cloud</title>
     <link rel="stylesheet" th:href="@{/styles.css}"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" rel="stylesheet">
 </head>
 
 <body class="p-4">
 <div class="container pt-4">
     <h1 class="text-center">Design your taco!</h1>
-    <img class="rounded mx-auto d-block" th:src="@{/images/taco-cloud.png}" th:width="200px" th:height="200px"/>
+    <img class="rounded mx-auto d-block" th:height="200px" th:src="@{/images/taco-cloud.png}" th:width="200px"/>
+
 
     <form method="POST" th:object="${taco}">
 
         <div class="row">
             <div class="col-12 d-flex justify-content-center text-center">
-                <span class="alert alert-danger" th:if="${#fields.hasErrors('ingredients')}"
-                      th:errors="*{ingredients}">Choose at least 1 ingredient.</span>
+                <span class="alert alert-danger" th:errors="*{ingredients}"
+                      th:if="${#fields.hasErrors('ingredients')}">Choose at least 1 ingredient.</span>
             </div>
         </div>
 
@@ -27,8 +28,8 @@
             <div class="col-4 mb-3 ingredient-group" id="wraps">
                 <h3>Designate your wrap:</h3>
                 <div class="form-check" th:each="ingredient : ${wrap}">
-                    <input class="form-check-input" th:field="*{ingredients}" type="checkbox"
-                           th:value="${ingredient.code}"/>
+                    <input class="form-check-input" th:field="*{ingredients}" th:value="${ingredient.code}"
+                           type="checkbox"/>
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
@@ -36,8 +37,8 @@
             <div class="col-4 mb-3 ingredient-group" id="proteins">
                 <h3>Pick your protein:</h3>
                 <div class="form-check" th:each="ingredient : ${protein}">
-                    <input class="form-check-input" th:field="*{ingredients}" type="checkbox"
-                           th:value="${ingredient.code}"/>
+                    <input class="form-check-input" th:field="*{ingredients}" th:value="${ingredient.code}"
+                           type="checkbox"/>
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
@@ -45,8 +46,8 @@
             <div class="col-4 mb-3 ingredient-group" id="cheeses">
                 <h3>Choose your cheese:</h3>
                 <div class="form-check" th:each="ingredient : ${cheese}">
-                    <input class="form-check-input" th:field="*{ingredients}" type="checkbox"
-                           th:value="${ingredient.code}"/>
+                    <input class="form-check-input" th:field="*{ingredients}" th:value="${ingredient.code}"
+                           type="checkbox"/>
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
@@ -56,8 +57,8 @@
             <div class="col-4 mb-3 ingredient-group" id="veggies">
                 <h3>Determine your veggies:</h3>
                 <div class="form-check" th:each="ingredient : ${veggies}">
-                    <input class="form-check-input" th:field="*{ingredients}" type="checkbox"
-                           th:value="${ingredient.code}"/>
+                    <input class="form-check-input" th:field="*{ingredients}" th:value="${ingredient.code}"
+                           type="checkbox"/>
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
@@ -65,8 +66,8 @@
             <div class="col-4 mb-3 ingredient-group" id="sauces">
                 <h3>Select your sauce:</h3>
                 <div class="form-check" th:each="ingredient : ${sauce}">
-                    <input class="form-check-input" th:field="*{ingredients}" type="checkbox"
-                           th:value="${ingredient.code}"/>
+                    <input class="form-check-input" th:field="*{ingredients}" th:value="${ingredient.code}"
+                           type="checkbox"/>
                     <span th:text="${ingredient.name}">INGREDIENT</span><br/>
                 </div>
             </div>
@@ -75,20 +76,21 @@
         <div class="pt-5">
             <h3>Name your taco creation:</h3>
             <div class="mb-3">
-                <input class="form-control w-25" type="text" th:field="*{name}"/>
-                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Named your taco with at least 5 letters</span>
+                <input class="form-control w-25" th:field="*{name}" type="text"/>
+                <span class="text-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Named your taco with at least 5 letters</span>
             </div>
             <button class="btn btn-primary">Submit Your Taco</button>
         </div>
     </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-        crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+<script crossorigin="anonymous"
         integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 </body>
 </html>
