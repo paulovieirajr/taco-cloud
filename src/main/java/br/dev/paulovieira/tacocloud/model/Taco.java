@@ -1,12 +1,8 @@
 package br.dev.paulovieira.tacocloud.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import javax.validation.constraints.*;
+import java.util.*;
 
 @Entity
 @Table(name = "tacos")
@@ -18,9 +14,9 @@ public class Taco {
 
     private Date createdAt;
     @NotNull
-    @Size(min=5, message="Name must be at least 5 characters long")
+    @Size(min = 5, message = "Name must be at least 5 characters long")
     private String name;
-    @Size(min=1, message="You must choose at least 1 ingredient")
+    @Size(min = 1, message = "You must choose at least 1 ingredient")
     @ManyToMany(targetEntity = Ingredient.class)
     @JoinTable(name = "taco_ingredients",
             joinColumns = @JoinColumn(name = "taco_id"),
@@ -61,7 +57,6 @@ public class Taco {
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
-
 
 
     @Override
