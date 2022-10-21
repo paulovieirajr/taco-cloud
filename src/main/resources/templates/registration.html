@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Taco Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" rel="stylesheet">
+</head>
+
+<body class="p-4">
+<div class="container pt-4">
+    <h1 class="text-center">Register</h1>
+    <img class="rounded mx-auto d-block" th:height="200px" th:src="@{/images/taco-cloud.png}" th:width="200px"/>
+
+
+    <form id="registerForm" method="POST" th:action="@{/register}">
+
+        <div class="row">
+            <div class="col-4 mb-3" id="username">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control" id="username" name="username" type="text"/>
+            </div>
+
+            <div class="col-4 mb-3" id="password">
+                <label class="form-label" for="password">Password: </label>
+                <input class="form-control" id="password" name="password" type="password"/><br/>
+            </div>
+
+            <div class="col-4 mb-3" id="confirm">
+                <label class="form-label" for="confirm">Confirm password: </label>
+                <input class="form-control" id="confirm" name="confirm" type="password"/><br/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3" id="fullname">
+                <label class="form-label" for="fullname">Full name: </label>
+                <input class="form-control" id="fullname" name="fullname" type="text"/><br/>
+            </div>
+
+            <div class="col-6 mb-3" id="street">
+                <label class="form-label" for="street">Street: </label>
+                <input class="form-control" id="street" name="street" type="text"/><br/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3 mb-3" id="city">
+                <label class="form-label" for="city">City: </label>
+                <input class="form-control" id="city" name="city" type="text"/><br/>
+            </div>
+
+            <div class="col-3 mb-3" id="state">
+                <label class="form-label" for="state">State: </label>
+                <input class="form-control" id="state" name="state" type="text"/><br/>
+            </div>
+
+            <div class="col-3 mb-3" id="zip">
+                <label class="form-label" for="zip">Zip: </label>
+                <input class="form-control" id="zip" name="zip" type="text"/><br/>
+            </div>
+
+            <div class="col-3 mb-3" id="phone">
+                <label class="form-label" for="phone">Phone: </label>
+                <input class="form-control" id="phone" name="phone" type="text"/><br/>
+            </div>
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Register"/>
+    </form>
+</div>
+</body>
+</html>
