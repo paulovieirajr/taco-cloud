@@ -1,22 +1,17 @@
 package br.dev.paulovieira.tacocloud.controller;
 
-import br.dev.paulovieira.tacocloud.model.Ingredient;
-import br.dev.paulovieira.tacocloud.model.Taco;
-import br.dev.paulovieira.tacocloud.model.TacoOrder;
-import br.dev.paulovieira.tacocloud.model.enums.Type;
-import br.dev.paulovieira.tacocloud.repository.IngredientRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import br.dev.paulovieira.tacocloud.model.*;
+import br.dev.paulovieira.tacocloud.model.enums.*;
+import br.dev.paulovieira.tacocloud.repository.*;
+import lombok.extern.slf4j.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.*;
+import java.util.*;
+import java.util.stream.*;
 
 @Slf4j
 @Controller
@@ -40,6 +35,13 @@ public class DesignTacoController {
         }
     }
 
+    private Iterable filterByType(List<Ingredient> ingredients, Type type) {
+        return ingredients
+                .stream()
+                .filter(x -> x.getType().equals(type))
+                .collect(Collectors.toList());
+    }
+
     @ModelAttribute(name = "tacoOrder")
     public TacoOrder order() {
         return new TacoOrder();
@@ -58,24 +60,19 @@ public class DesignTacoController {
     @PostMapping
     public String processTaco(@Valid Taco taco,
                               Errors errors,
-                              @ModelAttribute TacoOrder tacoOrder
-    ) {
-        if (errors.hasErrors()) {
-            return "design";
+                              @ModelAttribute TacoOrder tacoOrder) {
+        {
+
+            if (errors.hasErrors()) {
+                return "design";
+            }
+
+            taco.setCreatedAt(new Date());
+            tacoOrder.addTaco(taco);
+            log.info("Processing taco: {}", taco);
+
+            return "redirect:/orders/current";
         }
-        taco.setCreatedAt(new Date());
-        tacoOrder.addTaco(taco);
-        log.info("Processing taco: {}", taco);
-
-        return "redirect:/orders/current";
-    }
-
-    private Iterable<Ingredient> filterByType(
-            List<Ingredient> ingredients, Type type) {
-        return ingredients
-                .stream()
-                .filter(x -> x.getType().equals(type))
-                .collect(Collectors.toList());
     }
 }
 

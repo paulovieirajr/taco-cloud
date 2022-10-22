@@ -4,19 +4,24 @@
 <head>
     <title>Taco Cloud</title>
     <link rel="stylesheet" th:href="@{/styles.css}"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" rel="stylesheet">
 </head>
 
 <body class="p-4">
+<div class="container text-end">
+    <form method="POST" th:action="@{/logout}">
+        <input class="btn btn-secondary" type="submit" value="Logout"/>
+    </form>
+</div>
 <div class="container pt-4">
     <form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
         <h1 class="text-center">Order your taco creations!</h1>
 
-        <img class="rounded mx-auto d-block" th:src="@{/images/taco-cloud.png}" th:width="200px" th:height="200px"/>
+        <img class="rounded mx-auto d-block" th:height="200px" th:src="@{/images/taco-cloud.png}" th:width="200px"/>
 
         <h3>Your tacos in this order:</h3>
-        <a class="btn btn-secondary" th:href="@{/design}" id="another">Design another taco</a><br/>
+        <a class="btn btn-secondary" id="another" th:href="@{/design}">Design another taco</a><br/>
 
         <div class="mt-3">
             <ul class="list-group mb-3">
@@ -27,46 +32,55 @@
 
         <h3>Deliver my taco masterpieces to...</h3>
 
+        <!--
+            The errors were omitted because the fields are now filled in with the user's information automatically.
+        -->
+
         <div class="row">
             <div class="col-5 mb-3">
                 <label class="form-label" for="deliveryName">Name: </label>
-                <input class="form-control" id="deliveryName" type="text" th:field="*{deliveryName}"/>
-                <span class="text-danger"
-                      th:if="${#fields.hasErrors('deliveryName')}"
-                      th:errors="*{deliveryName}">Name is required</span>
+                <input class="form-control" id="deliveryName" name="deliveryName"
+                       readonly th:value="${user.fullname}" type="text"/>
+                <!--                <span class="text-danger"-->
+                <!--                      th:errors="*{deliveryName}"-->
+                <!--                      th:if="${#fields.hasErrors('deliveryName')}">Name is required</span>-->
             </div>
 
             <div class="col-7 mb-3">
                 <label class="form-label" for="deliveryStreet">Street address: </label>
-                <input class="form-control" id="deliveryStreet" type="text" th:field="*{deliveryStreet}"/>
-                <span class="text-danger"
-                      th:if="${#fields.hasErrors('deliveryStreet')}"
-                      th:errors="*{deliveryStreet}">Street is required</span>
+                <input class="form-control" id="deliveryStreet" name="deliveryStreet" readonly
+                       th:value="${user.street}" type="text"/>
+                <!--                <span class="text-danger"-->
+                <!--                      th:errors="*{deliveryStreet}"-->
+                <!--                      th:if="${#fields.hasErrors('deliveryStreet')}">Street is required</span>-->
             </div>
         </div>
         <div class="row">
             <div class="col-4 mb-3">
                 <label class="form-label" for="deliveryCity">City: </label>
-                <input class="form-control" id="deliveryCity" type="text" th:field="*{deliveryCity}"/>
-                <span class="text-danger"
-                      th:if="${#fields.hasErrors('deliveryCity')}"
-                      th:errors="*{deliveryCity}">City is required</span>
+                <input class="form-control" id="deliveryCity" name="deliveryCity" readonly
+                       th:value="${user.city}" type="text"/>
+                <!--                <span class="text-danger"-->
+                <!--                      th:errors="*{deliveryCity}"-->
+                <!--                      th:if="${#fields.hasErrors('deliveryCity')}">City is required</span>-->
             </div>
 
             <div class="col-4 mb-3">
                 <label class="form-label" for="deliveryState">State: </label>
-                <input class="form-control" id="deliveryState" type="text" th:field="*{deliveryState}"/>
-                <span class="text-danger"
-                      th:if="${#fields.hasErrors('deliveryState')}"
-                      th:errors="*{deliveryState}">State is required</span>
+                <input class="form-control" id="deliveryState" name="deliveryState" readonly
+                       th:value="${user.state}" type="text"/>
+                <!--                <span class="text-danger"-->
+                <!--                      th:errors="*{deliveryState}"-->
+                <!--                      th:if="${#fields.hasErrors('deliveryState')}">State is required</span>-->
             </div>
 
             <div class="col-4 mb-3">
                 <label class="form-label" for="deliveryZip">Zip code: </label>
-                <input class="form-control" id="deliveryZip" type="text" th:field="*{deliveryZip}"/>
-                <span class="text-danger"
-                      th:if="${#fields.hasErrors('deliveryZip')}"
-                      th:errors="*{deliveryZip}">Zip code is required</span>
+                <input class="form-control" id="deliveryZip" name="deliveryZip" readonly
+                       th:value="${user.zip}" type="text"/>
+                <!--                <span class="text-danger"-->
+                <!--                      th:errors="*{deliveryZip}"-->
+                <!--                      th:if="${#fields.hasErrors('deliveryZip')}">Zip code is required</span>-->
             </div>
         </div>
 
@@ -75,30 +89,30 @@
         <div class="row">
             <div class="col-3 mb-3">
                 <label class="form-label" for="ccNumber">Credit Card #: </label>
-                <input class="form-control" id="ccNumber" type="text" th:field="*{ccNumber}"/>
+                <input class="form-control" id="ccNumber" th:field="*{ccNumber}" type="text"/>
                 <span class="text-danger"
-                      th:if="${#fields.hasErrors('ccNumber')}"
-                      th:errors="*{ccNumber}">Not a valid credit card number</span>
+                      th:errors="*{ccNumber}"
+                      th:if="${#fields.hasErrors('ccNumber')}">Not a valid credit card number</span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-2 mb-3">
                 <label class="form-label" for="ccExpiration">Expiration: </label>
-                <input class="form-control" id="ccExpiration" type="text" th:field="*{ccExpiration}"/>
+                <input class="form-control" id="ccExpiration" th:field="*{ccExpiration}" type="text"/>
                 <span class="text-danger"
-                      th:if="${#fields.hasErrors('ccExpiration')}"
-                      th:errors="*{ccExpiration}">Must be formatted MM/YY</span>
+                      th:errors="*{ccExpiration}"
+                      th:if="${#fields.hasErrors('ccExpiration')}">Must be formatted MM/YY</span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-1 mb-3">
                 <label class="form-label" for="ccCVV">CVV: </label>
-                <input class="form-control" id="ccCVV" type="text" th:field="*{ccCVV}"/>
+                <input class="form-control" id="ccCVV" th:field="*{ccCVV}" type="text"/>
                 <span class="text-danger"
-                      th:if="${#fields.hasErrors('ccCVV')}"
-                      th:errors="*{ccCVV}">Invalid CVV</span>
+                      th:errors="*{ccCVV}"
+                      th:if="${#fields.hasErrors('ccCVV')}">Invalid CVV</span>
             </div>
         </div>
 
@@ -108,13 +122,14 @@
         </div>
     </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-        crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+<script crossorigin="anonymous"
         integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 </body>
 
 </html>
