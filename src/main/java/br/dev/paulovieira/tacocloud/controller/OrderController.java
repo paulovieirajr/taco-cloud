@@ -1,19 +1,18 @@
 package br.dev.paulovieira.tacocloud.controller;
 
-import br.dev.paulovieira.tacocloud.model.Taco;
-import br.dev.paulovieira.tacocloud.model.TacoOrder;
-import br.dev.paulovieira.tacocloud.repository.TacoOrderRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
+import br.dev.paulovieira.tacocloud.model.*;
+import br.dev.paulovieira.tacocloud.repository.*;
+import lombok.extern.slf4j.*;
+import org.springframework.security.core.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.validation.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.*;
+import org.springframework.web.servlet.*;
 
-import javax.validation.Valid;
-import java.util.Date;
+import javax.validation.*;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -22,26 +21,37 @@ import java.util.Date;
 public class OrderController {
 
     TacoOrderRepository tacoOrderRepository;
+    UserRepository userRepository;
 
-    public OrderController(TacoOrderRepository tacoOrderRepository) {
+    public OrderController(TacoOrderRepository tacoOrderRepository, UserRepository userRepository) {
         this.tacoOrderRepository = tacoOrderRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/current")
-    public String orderForm() {
-        return "orderForm";
+    public ModelAndView orderForm(@AuthenticationPrincipal User user, ModelMap model) {
+        // Pass the user to fill the inputs in orderForm.html
+        model.addAttribute("user", user);
+        return new ModelAndView("orderForm", model);
     }
 
     @PostMapping
     public String processOrder(@Valid TacoOrder order,
                                Errors errors,
-                               SessionStatus sessionStatus) {
+                               SessionStatus sessionStatus,
+                               @AuthenticationPrincipal User user) {
+
         if (errors.hasErrors()) {
             return "orderForm";
         }
+
+        order.setUser(user);
         order.setPlacedAt(new Date());
+
         tacoOrderRepository.save(order);
+
         log.info("Order submitted: {}", order);
+
         sessionStatus.setComplete();
 
         return "redirect:/";
