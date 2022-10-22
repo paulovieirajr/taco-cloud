@@ -9,6 +9,11 @@
 </head>
 
 <body class="p-4">
+<div class="container text-end">
+    <form method="POST" th:action="@{/logout}">
+        <input class="btn btn-secondary" type="submit" value="Logout"/>
+    </form>
+</div>
 <div class="container pt-4">
     <h1 class="text-center">Register</h1>
     <img class="rounded mx-auto d-block" th:height="200px" th:src="@{/images/taco-cloud.png}" th:width="200px"/>
