@@ -9,12 +9,16 @@
 </head>
 
 <body class="p-4">
+<div class="container text-end">
+    <form method="POST" th:action="@{/logout}">
+        <input class="btn btn-secondary" type="submit" value="Logout"/>
+    </form>
+</div>
 <div class="container pt-4">
     <h1 class="text-center">Design your taco!</h1>
     <img class="rounded mx-auto d-block" th:height="200px" th:src="@{/images/taco-cloud.png}" th:width="200px"/>
 
-
-    <form method="POST" th:object="${taco}">
+    <form method="POST" th:action="@{/design}" th:object="${taco}">
 
         <div class="row">
             <div class="col-12 d-flex justify-content-center text-center">
