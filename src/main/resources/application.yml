@@ -23,8 +23,45 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
+
 # Server configuration
 server:
-  port: 8080 #set your port
+  ssl:
+    key-store: classpath:cert/springboot.p12
+    key-store-password: password
+    key-store-type: pkcs12
+    key-alias: springboot
+    key-password: password
+    enabled: true
+  port: 8443
 
+# Logging configuration
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+      hibernate: ERROR
+    br:
+      com:
+        paulo:
+          tacos: DEBUG
+    root: INFO
+
+  config: classpath:logback-spring.xml
+  file:
+    path: logs
+    name: tacocloud.log
+
+# Variables for the application
+
+application:
+  name: Taco Cloud
+
+greeting:
+  welcome: Welcome to ${application.name}!
+
+taco:
+  orders:
+    pageSize: 10
 
